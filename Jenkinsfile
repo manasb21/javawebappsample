@@ -15,9 +15,10 @@ node {
     }
   
     stage('build') {
-      withMaven() {
-        sh 'mvnw clean package'
-      }
+        def mvn_version = 'defaultmaven'
+        withEnv("PATH+MAVEN=${tool mvn_version}/bin"] ) {
+          sh 'mvn clean package'
+        }
       
     }
   
