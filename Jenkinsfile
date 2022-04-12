@@ -16,7 +16,7 @@ node {
   
     stage('build') {
         def mvn_version = 'defaultmaven'
-        withEnv("PATH+MAVEN=${tool mvn_version}/bin"] ) {
+        withEnv(["PATH+MAVEN=${tool mvn_version}/bin"] ) {
           sh 'mvn clean package'
         }
       
