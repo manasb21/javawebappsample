@@ -24,7 +24,7 @@ def getFtpPublishProfile(def publishProfilesJson) {
       
         
       def resourceGroup = 'spoke-dev-vnet-rg'
-      def webAppName = 'sampleapp'
+      def webAppName = 'sampleapp2918673'
       // login Azure
 
        withCredentials([usernamePassword(credentialsId: 'spoke-dev-vnet-rg-owner', passwordVariable: 'AZURE_CLIENT_SECRET', usernameVariable: 'AZURE_CLIENT_ID')]) {
@@ -36,7 +36,8 @@ def getFtpPublishProfile(def publishProfilesJson) {
        azureCLI commands: [[exportVariablesString: '', script: 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'], [exportVariablesString: '', script: 'az account set -s $AZURE_SUBSCRIPTION_ID']], principalCredentialId: 'spoke-dev-vnet-rg-owner'
       }
       // get publish settings
-      def pubProfilesJson = sh script: "az webapp deployment list-publishing-profiles -g $resourceGroup -n $webAppName", returnStdout: true
+      //def pubProfilesJson = sh script: "az webapp deployment list-publishing-profiles -g $resourceGroup -n $webAppName", returnStdout: true
+      def pubProfileJson = azureCLI commands: [[exportVariablesString: '', script: 'az webapp deployment list-publishing-profiles -g $resourceGroup -n $webAppName']], principalCredentialId: 'spoke-dev-vnet-rg-owner'
       def ftpProfile = getFtpPublishProfile pubProfilesJson
       // upload package
       azureCLI commands: [[exportVariablesString: '', script: 'curl -T target/calculator-1.0.war $ftpProfile.url/webapps/ROOT.war -u "$ftpProfile.username:$ftpProfile.password"']], principalCredentialId: 'spoke-dev-vnet-rg-owner'
