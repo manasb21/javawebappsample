@@ -16,7 +16,7 @@ node {
   
     stage('build') {
       withMaven() {
-        sh 'mvn clean package'
+        sh 'mvnw clean package'
       }
       
     }
