@@ -41,7 +41,7 @@ def getFtpPublishProfile(def publishProfilesJson) {
       // upload package
       sh "curl -T target/calculator-1.0.war $ftpProfile.url/webapps/ROOT.war -u '$ftpProfile.username:$ftpProfile.password'"
       // log out
-     azureCLI commands: [[exportVariablesString: '', script: 'az logout'], principalCredentialId: 'spoke-dev-vnet-rg-owner'
+     azureCLI commands: [[exportVariablesString: '', script: 'az logout'], principalCredentialId: 'spoke-dev-vnet-rg-owner'}
       //sh 'az logout'
       
     }
