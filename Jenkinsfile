@@ -12,6 +12,10 @@ node {
         'AZURE_TENANT_ID=5855e6b5-0c59-47e0-bb93-ae4049a67315']) {
     stage('init') {
       checkout scm
+       steps{
+                echo "PATH = ${M2_HOME}/bin:${PATH}"
+                echo "M2_HOME = /opt/maven"
+       }
     }
   
     stage('build') {
