@@ -6,15 +6,7 @@ def getFtpPublishProfile(def publishProfilesJson) {
     if (p['publishMethod'] == 'FTP')
       return [url: p.publishUrl, username: p.userName, password: p.userPWD]
 }
-podTemplate(label: 'mypod', containers: [
-    containerTemplate(name: 'git', image: 'alpine/git', ttyEnabled: true, command: 'cat'),
-    containerTemplate(name: 'maven', image: 'maven:3.3.9-jdk-8-alpine', command: 'cat', ttyEnabled: true),
-    containerTemplate(name: 'azure', image: 'bitnami/azure-cli', command: 'cat', ttyEnabled: true)
-  ],
-  volumes: [
-    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
-  ]
-           ) { node {
+ node {
   withEnv(['AZURE_SUBSCRIPTION_ID=80a14f2f-5eff-4f5b-a9f5-9ca0878341fb',
         'AZURE_TENANT_ID=5855e6b5-0c59-47e0-bb93-ae4049a67315']) {
     stage('init') {
@@ -52,4 +44,4 @@ podTemplate(label: 'mypod', containers: [
     }
   }
 }
-             }
+             
