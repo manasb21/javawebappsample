@@ -26,7 +26,7 @@ node {
       def resourceGroup = 'spoke-dev-vnet-rg'
       def webAppName = 'sampleapp'
       // login Azure
-      withCredentials([usernamePassword(credentialsId: 'azure-dev-rg', passwordVariable: 'AZURE_CLIENT_SECRET', usernameVariable: 'AZURE_CLIENT_ID')]) {
+      withCredentials([usernamePassword(credentialsId: 'spoke-dev-vnet-rg-owner', passwordVariable: 'AZURE_CLIENT_SECRET', usernameVariable: 'AZURE_CLIENT_ID')]) {
        sh '''
           az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
           az account set -s $AZURE_SUBSCRIPTION_ID
