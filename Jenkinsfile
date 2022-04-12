@@ -13,8 +13,8 @@ node {
     stage('init') {
       checkout scm
       sh '''
-       export M2_HOME = /opt/maven
-       export PATH = ${M2_HOME}/bin:${PATH}
+       echo M2_HOME = /opt/maven
+       echo PATH = ${M2_HOME}/bin:${PATH}
        '''
     }
   
