@@ -27,13 +27,13 @@ def getFtpPublishProfile(def publishProfilesJson) {
       def webAppName = 'sampleapp'
       // login Azure
 
-       //withCredentials([usernamePassword(credentialsId: 'spoke-dev-vnet-rg-owner', passwordVariable: 'AZURE_CLIENT_SECRET', usernameVariable: 'AZURE_CLIENT_ID')]) {
+       withCredentials([usernamePassword(credentialsId: 'spoke-dev-vnet-rg-owner', passwordVariable: 'AZURE_CLIENT_SECRET', usernameVariable: 'AZURE_CLIENT_ID')]) {
         //sh '''
       azCommands('azure-dev-rg',["az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID", "az account set -s $AZURE_SUBSCRIPTION_ID"])
            //az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
            //az account set -s $AZURE_SUBSCRIPTION_ID
         //'''
-      //}
+      }
       // get publish settings
       def pubProfilesJson = sh script: "az webapp deployment list-publishing-profiles -g $resourceGroup -n $webAppName", returnStdout: true
       def ftpProfile = getFtpPublishProfile pubProfilesJson
