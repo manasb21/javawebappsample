@@ -34,18 +34,19 @@ def getFtpPublishProfile(def publishProfilesJson) {
            //az account set -s $AZURE_SUBSCRIPTION_ID
         //'''
        azureCLI commands: [[exportVariablesString: '', script: 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'], [exportVariablesString: '', script: 'az account set -s $AZURE_SUBSCRIPTION_ID']], principalCredentialId: 'spoke-dev-vnet-rg-owner'
-      }
+      
       // get publish settings
       //def pubProfilesJson = sh script: "az webapp deployment list-publishing-profiles -g $resourceGroup -n $webAppName", returnStdout: true
       azureCLI commands: [[exportVariablesString: 'pubProfileJson', script: 'az webapp deployment list-publishing-profiles -g $resourceGroup -n $webAppName']], principalCredentialId: 'spoke-dev-vnet-rg-owner'
-      def ftpProfile = getFtpPublishProfile pubProfilesJson
+      azureCLI commands: [[exportVariablesString: 'ftpProfile', script: 'getFtpPublishProfile pubProfilesJson']], principalCredentialId: 'spoke-dev-vnet-rg-owner'
+     
       // upload package
       azureCLI commands: [[exportVariablesString: '', script: 'curl -T target/calculator-1.0.war $ftpProfile.url/webapps/ROOT.war -u "$ftpProfile.username:$ftpProfile.password"']], principalCredentialId: 'spoke-dev-vnet-rg-owner'
       //sh "curl -T target/calculator-1.0.war $ftpProfile.url/webapps/ROOT.war -u '$ftpProfile.username:$ftpProfile.password'"
       // log out
      azureCLI commands: [[exportVariablesString: '', script: 'az logout']], principalCredentialId: 'spoke-dev-vnet-rg-owner'
       //sh 'az logout'
-      
+       }
     }
   }
 }
