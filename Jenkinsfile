@@ -21,7 +21,7 @@ def getFtpPublishProfile(def publishProfilesJson) {
     }
   
     stage('deploy') {
-      container('azure'){
+      
         
       def resourceGroup = 'spoke-dev-vnet-rg'
       def webAppName = 'sampleapp'
@@ -42,7 +42,7 @@ def getFtpPublishProfile(def publishProfilesJson) {
       // log out
       azCommands('azure-dev-rg',["az logout"])
       //sh 'az logout'
-      }
+      
     }
   }
 }
