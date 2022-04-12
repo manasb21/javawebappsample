@@ -39,7 +39,8 @@ def getFtpPublishProfile(def publishProfilesJson) {
       def pubProfilesJson = sh script: "az webapp deployment list-publishing-profiles -g $resourceGroup -n $webAppName", returnStdout: true
       def ftpProfile = getFtpPublishProfile pubProfilesJson
       // upload package
-      sh "curl -T target/calculator-1.0.war $ftpProfile.url/webapps/ROOT.war -u '$ftpProfile.username:$ftpProfile.password'"
+      azureCLI commands: [[exportVariablesString: '', script: 'curl -T target/calculator-1.0.war $ftpProfile.url/webapps/ROOT.war -u "$ftpProfile.username:$ftpProfile.password"']], principalCredentialId: 'spoke-dev-vnet-rg-owner'
+      //sh "curl -T target/calculator-1.0.war $ftpProfile.url/webapps/ROOT.war -u '$ftpProfile.username:$ftpProfile.password'"
       // log out
      azureCLI commands: [[exportVariablesString: '', script: 'az logout']], principalCredentialId: 'spoke-dev-vnet-rg-owner'
       //sh 'az logout'
